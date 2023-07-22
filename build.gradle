@@ -10,11 +10,35 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.3"
-
+        classpath "com.android.tools.build:gradle:4.2.0"
+        classpath GradlePlugin.kotlin_gradle_plugin
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+ext {
+    // 读取 local.properties
+    localProperties = new Properties()
+    def localPropertiesFile = file('local.properties')
+    if (localPropertiesFile.exists()) localProperties.load(localPropertiesFile.newDataInputStream())
+
+    VERSION_CODE = versionCode.toInteger()
+    VERSION_NAME = versionName ?: ""
+    COMPILE_SDK_VERSION = 32
+    MIN_SDK_VERSION = 24
+    TARGET_SDK_VERSION = COMPILE_SDK_VERSION
+
+    vivoPushAppKey = ""
+    vivoPushAppId = ""
+
+    gitCommitSha1 = ['git', 'log', '-1', '--pretty=%H'].execute([], project.rootDir).text.trim()
+    if (gitCommitSha1.length() >= 8) {
+        gitCommitSha1 = gitCommitSha1.substring(0, 8)
+    }
+
 }
 
 allprojects {

@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.library'
+}
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-kapt'
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.1.0"
+
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
+        }
+    }
+    aaptOptions{
+//        aaptOptions.additionalParameters("--emit-ids", "app/R.txt")
+//        aaptOptions.additionalParameters("--stable-ids", "app/R.txt")
+//        aaptOptions.additionalParameters("--emit-ids", "app/R.txt")
+    }
+    signingConfigs {
+        release {
+            storeFile file("sophixtest.jks")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+        }
+        debug {
+            storeFile file("sophixtest.jks")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    kapt  'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation 'com.nightonke:boommenu:2.1.1'
+    implementation Deps.kotlin_stdlib
+    implementation Deps.kotlin_stdlib_common
+    implementation Deps.kotlin_stdlib_jdk7
+    implementation Deps.kotlin_reflect
+    implementation Deps.kotlin_coroutines_core
+    implementation Deps.kotlin_coroutines_android
+    implementation Deps.appcompat
+    implementation Deps.fragment
+//    implementation Deps.core_ktx
+    implementation Deps.activity_ktx
+    implementation Deps.fragment_ktx
+    implementation Deps.lifecycle_livedata_ktx
+    implementation Deps.lifecycle_runtime_ktx
+    implementation Deps.lifecycle_viewmodel_ktx
+    implementation Deps.material
+    implementation 'com.aliyun.ams:alicloud-android-hotfix:3.3.8'
+
+}

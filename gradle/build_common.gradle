@@ -1,0 +1,115 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+
+def getValueType = { val ->
+    switch (val) {
+        case { it.startsWith('"') }:
+            return 'String'
+        case ['true', 'false']:
+            return 'boolean'
+        case { it.endsWith('L') || it.endsWith('l') }:
+            return 'long'
+        case { it.endsWith('F') || it.endsWith('f') }:
+            return 'float'
+        default:
+            return 'int'
+    }
+}
+
+android {
+    compileSdk COMPILE_SDK_VERSION
+    ndkVersion '21.3.6528147'
+
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+        multiDexEnabled true
+
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        buildConfigFieldMap.each { key, val ->
+            buildConfigField(getValueType(val), key, val)
+        }
+
+        vectorDrawables.generatedDensities = []
+    }
+
+    lintOptions {
+        abortOnError true
+        htmlReport true
+        textReport true
+        absolutePaths false
+        checkAllWarnings false
+        ignoreTestSources true
+        ignoreWarnings true
+        disable 'SmallSp', 'RtlHardcoded', 'ContentDescription', 'VectorRaster', 'VectorPath', 'InvalidPackage', 'ParcelCreator', 'RestrictedApi'
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        // languageVersion = "1.8"
+        suppressWarnings = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+
+    sourceSets {
+        main {
+            java {
+                srcDirs "build/generated/data_binding_base_class_source_out"
+            }
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/impl_debug.kotlin_module'
+        exclude 'META-INF/core_debug.kotlin_module'
+        exclude 'META-INF/api_debug.kotlin_module'
+        exclude 'META-INF/impl_release.kotlin_module'
+        exclude 'META-INF/core_release.kotlin_module'
+        exclude 'META-INF/api_release.kotlin_module'
+    }
+}
+
+//kotlin {
+//    jvmToolchain {
+//        languageVersion.set(JavaLanguageVersion.of(8))
+//    }
+//}
+
+dependencies {
+    implementation Deps.kotlin_stdlib
+    implementation Deps.kotlin_stdlib_common
+    implementation Deps.kotlin_stdlib_jdk7
+    implementation Deps.kotlin_reflect
+    implementation Deps.kotlin_coroutines_core
+    implementation Deps.kotlin_coroutines_android
+    implementation Deps.appcompat
+    implementation Deps.fragment
+    implementation Deps.core_ktx
+    implementation Deps.activity_ktx
+    implementation Deps.fragment_ktx
+    implementation Deps.lifecycle_livedata_ktx
+    implementation Deps.lifecycle_runtime_ktx
+    implementation Deps.lifecycle_viewmodel_ktx
+    implementation Deps.material
+//    implementation project(":common:claymore:core")
+}

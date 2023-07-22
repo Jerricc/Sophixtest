@@ -37,7 +37,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //修复图片
-                startActivity(new Intent(MainActivity.this, ChangeImageActivity.class));
+                try {
+                    startActivity(new Intent(MainActivity.this, Class.forName("com.sophix.patch.activities.MainActivity")));
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 //        btn3.setOnClickListener(new View.OnClickListener() {

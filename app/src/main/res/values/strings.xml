@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Sophixtest</string>
+    <string name="input_num_character">1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM</string>
 </resources>

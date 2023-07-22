@@ -1,0 +1,45 @@
+apply plugin: 'groovy'
+apply plugin: 'kotlin'
+buildscript {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+    }
+}
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    maven { url 'https://maven.aliyun.com/repository/google' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+    maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
+    maven { url "https://artifact.bytedance.com/repository/byteX/" }
+    maven { url "https://artifact.bytedance.com/repository/pangle" }
+    mavenCentral()
+    google()
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api localGroovy()
+    api gradleApi()
+    implementation 'com.android.tools:common:27.2.0'
+
+    implementation 'com.android.tools.build:gradle:4.2.2'
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10'
+}
+
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
