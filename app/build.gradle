@@ -5,12 +5,12 @@ apply plugin: 'com.jakewharton.butterknife'
 //apply from: "${rootProject.rootDir}/gradle/build_common.gradle"
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     ndkVersion '21.3.6528147'
     defaultConfig {
         applicationId "com.sophix.test"
         minSdkVersion 24
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 1
         versionName "1.1.0"
         multiDexEnabled true
@@ -22,7 +22,7 @@ android {
         }
     }
     aaptOptions{
-        aaptOptions.additionalParameters("--emit-ids", "app/R.txt")
+//        aaptOptions.additionalParameters("--emit-ids", "app/R.txt")
 //        aaptOptions.additionalParameters("--stable-ids", "app/R.txt")
 //        aaptOptions.additionalParameters("--emit-ids", "app/R.txt")
     }
@@ -55,6 +55,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
+        //TODO @木睿 打开后编译出错
+//        sourceCompatibility JavaVersion.VERSION_11
+//        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
